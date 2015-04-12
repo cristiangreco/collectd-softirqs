@@ -27,9 +27,7 @@
 __version__ = '1.0.0'
 __author__ = 'cristian@regolo.cc'
 
-
-PLUGIN_NAME = 'softirqs.py'
-
+PLUGIN_NAME = 'softirqs'
 COLLECTD_VALUE_TYPE = 'derive'
 
 class SoftIrqs(object):
@@ -87,7 +85,7 @@ class SoftIrqs(object):
 
     def dispatch_values(self, data):
         """
-        Read data and dispatch value to collectd.
+        Dispatch value to collectd.
 
         :param data: the dictionary of names and values to dispatch
         :type data: dictionary
@@ -102,9 +100,8 @@ class SoftIrqs(object):
             val.dispatch()
 
     def log(self, msg):
-        if not self.verbose:
-            return
-        collectd.info('%s: %s' % (PLUGIN_NAME, msg))
+        if self.verbose:
+            collectd.info('%s: %s' % (PLUGIN_NAME, msg))
 
     def error(self, msg):
         collectd.error('%s: [error] %s' % (PLUGIN_NAME, msg))
