@@ -41,3 +41,11 @@ How it works
 ------------
 
 The `collectd-softirqs` plugin is very similar to the builtin [IRQ](https://collectd.org/wiki/index.php/Plugin:IRQ) plugin. It works by parsing the `/proc/softirqs` file to extract data about the number softirq handled by the kernel.
+
+Graph example
+-------------
+
+This is an example graph created using [rrdgraph](https://oss.oetiker.ch/rrdtool/doc/rrdgraph.en.html)
+
+![events/sec](https://github.com/cristiangreco/collectd-softirqs/raw/master/graph.png)
+
