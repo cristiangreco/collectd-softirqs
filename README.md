@@ -40,12 +40,33 @@ Option|Type|Default|Description
 How it works
 ------------
 
-The `collectd-softirqs` plugin is very similar to the builtin [IRQ](https://collectd.org/wiki/index.php/Plugin:IRQ) plugin. It works by parsing the `/proc/softirqs` file to extract data about the number softirq handled by the kernel.
+The `collectd-softirqs` plugin is very similar to the Collectd's builtin [IRQ](https://collectd.org/wiki/index.php/Plugin:IRQ) plugin. It works by parsing the `/proc/softirqs` file to extract data about the number of softirqs handled by the kernel since boot time.
+
+Manual run
+----------
+
+You can run `collectd-softirqs` from the command line as a simple python script. It will output something like this and exit immediately:
+
+```
+$ python softirqs.py 
+HRTIMER:4949
+SCHED:1834967
+BLOCK_IOPOLL:21
+NET_TX:2920
+RCU:1985467
+TIMER:2095671
+HI:68181
+NET_RX:936
+TASKLET:2829290
+BLOCK:93491
+```
+
+This could be useful to get an idea of the values the plugin parses and dispatches to collectd.
 
 Graph example
 -------------
 
-This is an example graph created using [rrdgraph](https://oss.oetiker.ch/rrdtool/doc/rrdgraph.en.html)
+This is an example graph (a mostly idle system) created using [rrdgraph](https://oss.oetiker.ch/rrdtool/doc/rrdgraph.en.html):
 
 ![events/sec](https://github.com/cristiangreco/collectd-softirqs/raw/master/graph.png)
 
