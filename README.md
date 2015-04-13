@@ -35,6 +35,8 @@ The following options may be specified in the `Module` configuration stanza:
 
 Option|Type|Default|Description
 ------|----|-------|-----------
+`Softirq`|String|-|Select this softirq to be collected (may appear multiple times)
+`IgnoreSelected`|Boolean|False|If this is set to `true`, all selected softirqs are ignored and all others are collected
 `Verbose`|Boolean|False|Enable verbose logging (not recommended)
 
 How it works

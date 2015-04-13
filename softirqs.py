@@ -33,6 +33,8 @@ COLLECTD_VALUE_TYPE = 'derive'
 class SoftIrqs(object):
 
     def __init__(self):
+        self.list = []
+        self.blacklist = False
         self.verbose = False
 
     def config_callback(self, conf):
@@ -40,7 +42,11 @@ class SoftIrqs(object):
         Configuration callback.
         """
         for node in conf.children:
-            if node.key == 'Verbose':
+            if node.key == 'Softirq':
+                self.list.append(node.values[0])
+            elif node.key == 'IgnoreSelected':
+                self.blacklist = bool(node.values[0])
+            elif node.key == 'Verbose':
                 self.verbose = bool(node.values[0])
             else:
                 self.error('Unknown config key: %s' % node.key)
@@ -91,13 +97,31 @@ class SoftIrqs(object):
         :type data: dictionary
         """
         for name, value in data.items():
-            self.log('%s:%s' % (name, value))
-            val = collectd.Values()
-            val.plugin = PLUGIN_NAME
-            val.type = COLLECTD_VALUE_TYPE
-            val.type_instance = name
-            val.values = [value,]
-            val.dispatch()
+            if self.match(name):
+                self.log('%s:%s' % (name, value))
+                val = collectd.Values()
+                val.plugin = PLUGIN_NAME
+                val.type = COLLECTD_VALUE_TYPE
+                val.type_instance = name
+                val.values = [value,]
+                val.dispatch()
+
+    def match(self, softirq):
+        """
+        Check whether a softirq should be collected.
+
+        :param softirq: the name of the softirq to check
+        :type softirq: string
+
+        :returns: True if the softirq should be collected, False otherwise
+        :rtype: boolean
+        """
+        if not self.list:
+            return True
+        if self.blacklist:
+            return True if softirq not in self.list else False
+        else:
+            return True if softirq in self.list else False
 
     def log(self, msg):
         if self.verbose:
