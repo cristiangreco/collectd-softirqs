@@ -14,19 +14,20 @@ Configuration
 -------------
 
 Add the following to your collectd configuration file:
+```xml
+<LoadPlugin python>
+    Globals true
+</LoadPlugin>
+    
+<Plugin python>
+    ModulePath "/usr/lib/collectd/plugins/python"
+    Import "softirqs"
 
-    <LoadPlugin python>
-      Globals true
-    </LoadPlugin>
-    
-    <Plugin python>
-      ModulePath "/usr/lib/collectd/plugins/python"
-      Import "softirqs"
-    
-      <Module softirqs>
+    <Module softirqs>
         Verbose false
-      </Module>
-    </Plugin>
+    </Module>
+</Plugin>
+```
 
 Options
 -------
