@@ -1,7 +1,7 @@
 collectd-softirqs
 =================
 
-collectd-softirqs is a [Python plugin](http://collectd.org/documentation/manpages/collectd-python.5.shtml) for [Collectd](https://collectd.org) that measures the number of softirqs handled by the kernel
+`collectd-softirqs` is a [Python plugin](http://collectd.org/documentation/manpages/collectd-python.5.shtml) for [Collectd](https://collectd.org) that measures the rate at which the Linux kernel handles softirqs.
 
 Install
 -------
@@ -13,7 +13,7 @@ Install
 Configuration
 -------------
 
-Add the following to your collectd config
+Add the following to your collectd configuration file:
 
     <LoadPlugin python>
       Globals true
@@ -27,3 +27,17 @@ Add the following to your collectd config
         Verbose false
       </Module>
     </Plugin>
+
+Options
+-------
+
+The following options may be specified in the `Module` configuration stanza:
+
+Option|Type|Default|Description
+------|----|-------|-----------
+`Verbose`|Boolean|False|Enable verbose logging (not recommended)
+
+How it works
+------------
+
+The `collectd-softirqs` plugin is very similar to the builtin [IRQ](https://collectd.org/wiki/index.php/Plugin:IRQ) plugin. It works by parsing the `/proc/softirqs` file to extract data about the number softirq handled by the kernel.
